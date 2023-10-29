@@ -1,3 +1,54 @@
 html{
     height:100%;
+    display:flex;
+}
+body{
+    flex:1;    
+}
+
+.bars{
+    flex:1;
+    justify-content: center;
+    text-align: center;
+}
+
+#middleBox{
+    flex:3;
+    display:flex;
+    justify-content: center;
+}
+
+#calculatorBox{
+    flex:0 0 10cm;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#display{
+    min-height: 1cm;
+}
+#buttonBox{    
+    display: flex;
+    flex-direction: column;
+    
+}
+.row{
+    flex:1;
+    display: flex;
+    justify-content: space-between;
+}
+#lowerRows{
+    display:flex;    
+}
+#rightRow{
+    display:flex;
+} 
+#sum{
+    align-self: stretch;
+}
+
+button{
+    width: 1cm;
+    height: auto;
 }
