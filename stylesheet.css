@@ -4,12 +4,20 @@ html{
 }
 body{
     flex:1;    
+    display: flex;
+    flex-direction: column;
+}
+h1{
+    margin:0;
+    padding:0;
 }
 
 .bars{
     flex:1;
+    display: flex;
     justify-content: center;
     text-align: center;
+    align-items: center;
 }
 
 #middleBox{
@@ -19,36 +27,65 @@ body{
 }
 
 #calculatorBox{
-    flex:0 0 10cm;
+    background-color: grey;
+    flex:0.2;
+    align-self:stretch;
     display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;    
+    border-radius: 20px;
+    padding:0.5cm;
 }
 #display{
-    min-height: 1cm;
+    flex:1;
+    min-height: 0.5cm;
+    align-self: stretch;
+    background-color: rgb(219, 215, 215);
+    border-radius: 10px;
 }
 #buttonBox{    
     display: flex;
     flex-direction: column;
-    
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+    flex:8;    
+    row-gap: 5px;
 }
-.row{
-    flex:1;
-    display: flex;
-    justify-content: space-between;
+.row{    
+    display: flex;    
+    align-items: baseline;
+    align-self: stretch;
+          
 }
 #lowerRows{
-    display:flex;    
+    display:flex; 
+    padding:0;   
+    align-self: stretch;
+        
+}
+#leftRow{
+    flex:3;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    
 }
 #rightRow{
     display:flex;
+    flex:1;
 } 
-#sum{
-    align-self: stretch;
+#sum{    
+    margin-right: 0;
+    height: 105px;
+    background-color: lightgreen;
+}
+#onOff{
+    background-color: rgb(243, 99, 99);
 }
 
 button{
-    width: 1cm;
-    height: auto;
+    border-color: white;
+    flex:1;
+    height:50px;
+    border-radius: 20px;    
 }
