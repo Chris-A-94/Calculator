@@ -6,9 +6,9 @@ let firstTime = 1;
 
 function resetGlobalVariables()
 {
-    primerDigito = 0;
-    segundoDigito = 0;
-    simbolo = "";
+    primerDigito = null;
+    segundoDigito = null;
+    simbolo = null;
     moverDigito = false;
 }
 
@@ -47,10 +47,10 @@ function updateNumber(number,unit)
     return number * 10 + unit;
 }
 
-function calculateOp()
+function calculateOp(botonSegundoDigito)
 {
-    if(!primerDigito || !segundoDigito || !simbolo)
-        return;
+    if(primerDigito == null || segundoDigito == null || simbolo == null)
+        return; 
     let res;
     switch(simbolo)
     {
@@ -63,9 +63,24 @@ function calculateOp()
         case '/': res = primerDigito / segundoDigito;
         break;
     }
+    let moverDigitoLocal;
+    if(botonSegundoDigito === "=")
+        moverDigitoLocal = false;
+    else
+        moverDigitoLocal = true;
+    
+    const display = document.getElementById("display");    
+    
     resetGlobalVariables();
-    const display = document.getElementById("display");
-    display.textContent = res;
+    primerDigito = res;
+    if(!moverDigitoLocal)
+        display.textContent = res;
+    else
+    {
+        display.textContent = res+""+botonSegundoDigito;
+        moverDigito = true;
+    }       
+    
 }
 
 function getButton(botonApretado)
@@ -76,15 +91,26 @@ function getButton(botonApretado)
     if(pos > 47 && pos < 58)
         botonApretado = Number(botonApretado);
     else if(pos === 42 || pos === 43 || pos === 45 || pos === 47 || pos === 88)
-    {
-        simbolo = botonApretado;
-        moverDigito = !moverDigito;
-        display.textContent = display.textContent+""+simbolo; 
-        return;
+    {  
+        if(pos === 88)
+            botonApretado = "*";
+        if(!moverDigito)
+        {
+            simbolo = botonApretado;
+            moverDigito = !moverDigito;
+            display.textContent = display.textContent+""+simbolo; 
+            return; 
+        }
+        else
+        {
+            calculateOp(botonApretado);
+            simbolo = botonApretado;            
+            return;
+        }        
     }     
     else if(pos === 61)
         {
-            calculateOp();
+            calculateOp(botonApretado);
             return;
         }   
     else
