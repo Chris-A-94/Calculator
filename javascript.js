@@ -85,7 +85,26 @@ function calculateOp(botonSegundoDigito)
 
 function deleteInput()
 {
-
+    const display = document.getElementById('display');
+    let unidad;
+    if(!moverDigito)
+    {
+        unidad = (primerDigito % 10) / 10;
+        primerDigito = (primerDigito/10) - unidad;
+        display.textContent = primerDigito;
+    }
+    else if(moverDigito && segundoDigito !== null)
+    {
+        unidad = (segundoDigito % 10) /10;
+        segundoDigito = (segundoDigito/10) - unidad;
+        display.textContent = primerDigito+""+simbolo+""+segundoDigito;
+    }
+    else
+    {
+        simbolo = null;
+        moverDigito = false;
+        display.textContent = primerDigito;
+    }
 }
 function clearAll()
 {
