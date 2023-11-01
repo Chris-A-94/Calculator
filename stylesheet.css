@@ -15,11 +15,15 @@ h1{
 .bars{
     flex:1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     text-align: center;
     align-items: center;
 }
-
+p{
+    padding: 0;
+    margin: 0;
+}
 #middleBox{
     flex:3;
     display:flex;

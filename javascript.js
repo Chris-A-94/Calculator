@@ -3,6 +3,9 @@ let segundoDigito;
 let simbolo;
 let moverDigito;
 let firstTime = 1;
+let floatingFirst;
+let floatingSecond;
+let digitZero;
 
 function resetGlobalVariables()
 {
@@ -10,6 +13,9 @@ function resetGlobalVariables()
     segundoDigito = null;
     simbolo = null;
     moverDigito = false;
+    floatingFirst = false;
+    floatingSecond = false;
+    digitZero = false;
 }
 
 function initializeCalculator()
@@ -63,13 +69,19 @@ function calculateOp(botonSegundoDigito)
         case '/': res = primerDigito / segundoDigito;
         break;
     }
+    const display = document.getElementById("display");
+    if(res === Infinity)
+    {
+        resetGlobalVariables();
+        display.textContent = "You've doomed us all."
+        return;
+    }
+
     let moverDigitoLocal;
     if(botonSegundoDigito === "=")
         moverDigitoLocal = false;
     else
         moverDigitoLocal = true;
-    
-    const display = document.getElementById("display");    
     
     resetGlobalVariables();
     primerDigito = res;
@@ -112,10 +124,27 @@ function clearAll()
     display.textContent = 0;
     resetGlobalVariables();
 }
+function floatingNumber()
+{
+    if(moverDigito && segundoDigito === null)
+        return;
+    const display = document.getElementById('display');
+    if(!moverDigito)
+    {
+        floatingFirst = true;
+        display.textContent = primerDigito+".";
+        return;
+    }
+    else
+    {
+        floatingSecond = true;
+        display.textContent = primerDigito+""+simbolo+""+segundoDigito+".";
+        return;
+    }
+}
 
 function getButton(botonApretado)
-{
-    console.log(botonApretado);
+{    
     let pos = botonApretado.charCodeAt();
     const display = document.getElementById("display");
     
@@ -154,16 +183,60 @@ function getButton(botonApretado)
         clearAll();
         return;
     }
+    else if(botonApretado === ".")
+    {
+        floatingNumber();
+        return;
+    }
     else
         return;
     
     if(!moverDigito)
     {
+        if(floatingFirst && botonApretado !== 0)
+        {
+            botonApretado /= 10;
+            primerDigito /= 10;
+        }
+        else if(floatingFirst && botonApretado === 0)
+        {
+            digitZero = true;
+            primerDigito /= 10;
+            primerDigito = updateNumber(primerDigito,botonApretado);
+            
+            display.textContent = primerDigito+".0";            
+            return;
+        } 
+        if(digitZero && botonApretado !== 0)
+        {
+            digitZero = false;
+            botonApretado /= 10;
+        }         
+            
         primerDigito = updateNumber(primerDigito,botonApretado);
         display.textContent = primerDigito;
     }
     else
     {
+        if(floatingSecond && botonApretado !== 0)
+        {
+            botonApretado /= 10;
+            segundoDigito /= 10;
+        }
+        else if(floatingSecond && botonApretado === 0)
+        {
+            digitZero = true;
+            segundoDigito /= 10;
+            segundoDigito = updateNumber(segundoDigito,botonApretado);
+            
+            display.textContent = display.textContent+""+segundoDigito+".0";            
+            return;
+        } 
+        if(digitZero && botonApretado !== 0)
+        {
+            digitZero = false;
+            botonApretado /= 10;
+        } 
         segundoDigito = updateNumber(segundoDigito,botonApretado);
         display.textContent = primerDigito+""+simbolo+""+segundoDigito; 
     }
