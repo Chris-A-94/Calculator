@@ -83,8 +83,20 @@ function calculateOp(botonSegundoDigito)
     
 }
 
+function deleteInput()
+{
+
+}
+function clearAll()
+{
+    const display = document.getElementById('display');
+    display.textContent = 0;
+    resetGlobalVariables();
+}
+
 function getButton(botonApretado)
 {
+    console.log(botonApretado);
     let pos = botonApretado.charCodeAt();
     const display = document.getElementById("display");
     
@@ -113,6 +125,16 @@ function getButton(botonApretado)
             calculateOp(botonApretado);
             return;
         }   
+    else if(botonApretado === "C")
+    {
+        deleteInput();
+        return;
+    }
+    else if(botonApretado === "A/C")
+    {
+        clearAll();
+        return;
+    }
     else
         return;
     
